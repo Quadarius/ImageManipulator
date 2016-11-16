@@ -1,0 +1,78 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Live Pixels</title>
+	<link rel="SHORTCUT ICON" href="../../assets/favicon.png">
+	<link rel="stylesheet" href="../../stylesheets/style.css">
+	<script language="javascript" src="../../lib/dat.gui/dat.gui.min.js"></script>
+</head>
+<body>
+	<div>
+		<a href="../../index.html">
+			<h1 class="name">← Back</h1>
+		</a>
+	</div>
+
+	<section id="pixel" class="container canvas-container">
+		<div id="canvas"></div>
+		<input id="filepicker" type="file" style="visibility:hidden" />
+	</section>
+	<script type='text/javascript' src='../../lib/RequestAnimationFrame.js'></script>
+	<script language='javascript' src='livepixel.js'></script>
+	<script>
+		window.onload = function(){
+			var sketch = new livePixel();
+			var gui = new dat.GUI();
+			sketch.init();
+
+			gui.add(sketch, 'background');
+			gui.add(sketch, 'trail');
+			gui.add(sketch, 'pixelshape', {
+				'square': 'square',
+				'circle': 'circle',
+				'vertical line': 'vline',
+				'horizontal line': 'hline',
+				'spinning line': 'spinline'
+			}).name('Pixel Shape');
+			gui.add(sketch, 'travelstyle', {
+				'up': 'up',
+				'down': 'down',
+				'left': 'left',
+				'right': 'right',
+				'random': 'random'
+			}).onChange(function(){
+				sketch.init();
+			}).name('Travel Style');
+			gui.add(sketch, 'numPixels', 1, 800).onChange(function(){
+				sketch.init();
+			}).name('Number of Pixels')
+			gui.add(sketch, 'threshold', 0, 255).step(1);
+			gui.add(sketch, 'maxSize', 0, 500);
+			gui.add(sketch, 'speed', 0, 5).step(.001);
+			gui.add(sketch, 'growthRate', 0, 1).step(.001);
+			gui.add(sketch, 'init').name('Redraw');
+			gui.add(sketch, 'chooseFile').name('Choose Image');
+			gui.add(sketch, 'clear');
+
+			function handleImage(){
+				console.log('handle image')
+				if(this.files && this.files[0]){
+
+					var fileReader = new FileReader();
+					fileReader.onload = function(e){
+						sketch.source = e.target.result;
+						sketch.init();
+					}
+					fileReader.readAsDataURL(this.files[0]);
+
+					console.log('image handled')
+				}
+			}
+
+
+			document.getElementById('filepicker').addEventListener("change", handleImage, false);
+		}
+	</script>
+</body>
+</html>
