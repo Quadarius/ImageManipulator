@@ -45,6 +45,7 @@ var PixelDisplay = function(numPixels, maxPixelSpeed, maxPixelSize) {
 
 	this.LivePixels = [];
 
+	this.sourceImageUrl = 'charlie.png';
 	this.imageSample = new Image();
 	this.pixels = [];
 	this.imageData;
@@ -223,4 +224,5 @@ PixelDisplay.prototype.render = function(){
 }
 
 PixelDisplay.prototype._init = function () {
+	this.imageSample.src = this.sourceImageUrl || 'charlie.png';
 }

@@ -1,4 +1,4 @@
-!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -8,13 +8,9 @@
 	<script language="javascript" src="../../lib/dat.gui/dat.gui.min.js"></script>
 </head>
 <body>
-	<div>
-		<a href="../../index.html">
-			<h1 class="name">← Back</h1>
-		</a>
-	</div>
 
-	<section id="pixel" class="container canvas-container">
+
+	<section id="pixel" class="canvas-container">
 		<div id="canvas"></div>
 		<input id="filepicker" type="file" style="visibility:hidden" />
 	</section>
@@ -22,38 +18,40 @@
 	<script language='javascript' src='livepixel.js'></script>
 	<script>
 		window.onload = function(){
-			var sketch = new livePixel();
+			// var sketch = new livePixel();
+			var sketch = new PixelDisplay();
 			var gui = new dat.GUI();
-			sketch.init();
+			sketch._init();
 
-			gui.add(sketch, 'background');
-			gui.add(sketch, 'trail');
-			gui.add(sketch, 'pixelshape', {
+			// gui.add(sketch, 'background');
+			// gui.add(sketch, 'trail');
+			gui.add(sketch, 'pixelShape', {
 				'square': 'square',
 				'circle': 'circle',
 				'vertical line': 'vline',
 				'horizontal line': 'hline',
-				'spinning line': 'spinline'
+				// 'spinning line': 'spinline',
+				'Zoom': 'zoom'
 			}).name('Pixel Shape');
-			gui.add(sketch, 'travelstyle', {
+			gui.add(sketch, 'travelStyle', {
 				'up': 'up',
 				'down': 'down',
 				'left': 'left',
 				'right': 'right',
-				'random': 'random'
+				'random': 'random',
+				// 'Grid': 'grid'
 			}).onChange(function(){
-				sketch.init();
+				sketch._init();
 			}).name('Travel Style');
-			gui.add(sketch, 'numPixels', 1, 800).onChange(function(){
-				sketch.init();
-			}).name('Number of Pixels')
-			gui.add(sketch, 'threshold', 0, 255).step(1);
-			gui.add(sketch, 'maxSize', 0, 500);
-			gui.add(sketch, 'speed', 0, 5).step(.001);
-			gui.add(sketch, 'growthRate', 0, 1).step(.001);
-			gui.add(sketch, 'init').name('Redraw');
+			gui.add(sketch, 'numPixels', 1, 500).onChange(function(){ sketch._init(); }).name('Number of Pixels');
+			// gui.add(sketch, 'threshold', 0, 255).step(1);
+			gui.add(sketch, 'pixelMaxSize', 1, 100);
+			gui.add(sketch, 'pixelMaxSpeed', 0, 20).step(1);
+			// gui.add(sketch, 'growthRate', 0, 1).step(.001);
+			// gui.add(sketch, 'maxCounter');
+			gui.add(sketch, '_init').name('Redraw');
 			gui.add(sketch, 'chooseFile').name('Choose Image');
-			gui.add(sketch, 'clear');
+			// gui.add(sketch, 'clear');
 
 			function handleImage(){
 				console.log('handle image')
@@ -61,8 +59,8 @@
 
 					var fileReader = new FileReader();
 					fileReader.onload = function(e){
-						sketch.source = e.target.result;
-						sketch.init();
+						sketch.sourceImageUrl = e.target.result;
+						sketch._init();
 					}
 					fileReader.readAsDataURL(this.files[0]);
 
