@@ -63,7 +63,7 @@ var PixelDisplay = function(numPixels, maxPixelSpeed, maxPixelSize) {
 
 	this.travelStyles = {
 		'up': function(pixel) {
-			pixel.y -= pixel.speed
+			pixel.y -= pixel.speed;
 		},
 		'down': function(pixel) {
 			pixel.y += pixel.speed;
