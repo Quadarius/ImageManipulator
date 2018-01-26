@@ -5,72 +5,8 @@
 	<title>Live Pixels</title>
 	<link rel="SHORTCUT ICON" href="icon.png">
 	<link rel="stylesheet" href="style.css">
-	<script language="javascript" src="./lib/dat.gui/dat.gui.min.js"></script>
 </head>
 <body>
-
-
-	<section id="pixel" class="canvas-container">
-		<div id="canvas"></div>
-		<input id="filepicker" type="file" style="visibility:hidden" />
-	</section>
-	<script type='text/javascript' src='../../lib/RequestAnimationFrame.js'></script>
-	<script language='javascript' src='livepixel.js'></script>
-	<script>
-		window.onload = function(){
-			// var sketch = new livePixel();
-			var sketch = new PixelDisplay();
-			var gui = new dat.GUI();
-			sketch._init();
-
-			// gui.add(sketch, 'background');
-			// gui.add(sketch, 'trail');
-			gui.add(sketch, 'pixelShape', {
-				'square': 'square',
-				'circle': 'circle',
-				'vertical line': 'vline',
-				'horizontal line': 'hline',
-				// 'spinning line': 'spinline',
-				'Zoom': 'zoom'
-			}).name('Pixel Shape');
-			gui.add(sketch, 'travelStyle', {
-				'up': 'up',
-				'down': 'down',
-				'left': 'left',
-				'right': 'right',
-				'random': 'random',
-				// 'Grid': 'grid'
-			}).onChange(function(){
-				sketch._init();
-			}).name('Travel Style');
-			gui.add(sketch, 'numPixels', 1, 500).onChange(function(){ sketch._init(); }).name('Number of Pixels');
-			// gui.add(sketch, 'threshold', 0, 255).step(1);
-			gui.add(sketch, 'pixelMaxSize', 1, 100);
-			gui.add(sketch, 'pixelMaxSpeed', 0, 20).step(1);
-			// gui.add(sketch, 'growthRate', 0, 1).step(.001);
-			// gui.add(sketch, 'maxCounter');
-			gui.add(sketch, '_init').name('Redraw');
-			gui.add(sketch, 'chooseFile').name('Choose Image');
-			// gui.add(sketch, 'clear');
-
-			function handleImage(){
-				console.log('handle image')
-				if(this.files && this.files[0]){
-
-					var fileReader = new FileReader();
-					fileReader.onload = function(e){
-						sketch.sourceImageUrl = e.target.result;
-						sketch._init();
-					}
-					fileReader.readAsDataURL(this.files[0]);
-
-					console.log('image handled')
-				}
-			}
-
-
-			document.getElementById('filepicker').addEventListener("change", handleImage, false);
-		}
-	</script>
+	<script language='javascript' src='sketch.js'></script>
 </body>
 </html>
