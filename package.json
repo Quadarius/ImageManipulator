@@ -1,0 +1,26 @@
+{
+  "name": "livepixel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "livepixel.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Quadarius/livepixel.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Quadarius/livepixel/issues"
+  },
+  "homepage": "https://github.com/Quadarius/livepixel#readme",
+  "devDependencies": {
+    "browser-sync": "^2.23.6",
+    "gulp": "^4.0.0"
+  }
+}
