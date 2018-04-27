@@ -6,7 +6,8 @@ var paths = {
 		src: './**/*.css'
 	},
 	scripts: {
-		src: './**/*.js'
+		src: './**/*.js',
+		lib: './**/*.js'
 	},
 	html: './**/*.html'
 };

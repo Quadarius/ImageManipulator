@@ -4,10 +4,30 @@ var pixels = [];
 var imageLoaded = false;
 var imageData = [];
 
+var img = new Image();
+// img.onload =
+// img.addEventListener( 'load', 
+// }, false );
+
+// img.addEventListener( 'error', function() {
+
+// }, false );
+
+img.src = './assets/heic0307g.jpg';
+img.onload = load_image;
+img.onerror = function(){ alert( img.src + ' failed' ); }
+
+function load_image(){
+	canvas.getContext('2d').drawImage( img, 0, 0 );
+	temp = canvas.getContext('2d').getImageData( 0, 0, img.width, img.height );
+	imageOptions.data = temp.data;
+	DrawPixelsToCanvas( canvas, pixels, pixelOptions );
+}
+
 var imageOptions = {
 	height: 800,
 	width:  800,
-	data: new Uint8ClampedArray( this.height * this.width * 4)
+	data: new Uint8ClampedArray( this.height * this.width * 4 )
 }
 
 var factoryOptions = {
@@ -60,28 +80,6 @@ function DrawImageToCanvas( image, canvas, options )
 	imageLoaded = true;
 }
 
-function LoadImage( canvas, imgUrl, options )
-{
-	var img = new Image( options.width, options.height );
-
-	img.addEventListener( 'load', function(){ 
-		canvas.width  = image.width;
-		canvas.height = image.height;
-		canvas.getContext('2d').drawImage( image, 0, 0 );
-		temp = canvas.getContext('2d').getImageData( 0, 0, image.width, image.height );
-		imageOptions.data = temp.data;
-		console.log()
-		DrawPixelsToCanvas( canvas, pixels, pixelOptions );
-	}, false );
-
-	img.addEventListener( 'error', function() {
-
-	}, false );
-
-	img.src = imgUrl;
-	return img;
-}
-
 var pixelOptions = {
 	shape: 'round'
 }
@@ -132,6 +130,12 @@ function AddNodeToDOM( parent, child )
 
 AddNodeToDOM( document.body, canvas );
 
-var image = LoadImage( canvas, 'heic0307g.jpg', imageOptions );
+//var image = LoadImage( canvas, './assets/heic0307g.jpg', imageOptions );
 GeneratePixels( pixels, factoryOptions );
 DrawPixelsToCanvas( canvas, pixels, pixelOptions );
+
+requestAnimationFrame(loop);
+
+function loop() {
+	requestAnimationFrame(loop);
+}

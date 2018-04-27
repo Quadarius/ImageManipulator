@@ -3,10 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Live Pixels</title>
-	<link rel="SHORTCUT ICON" href="icon.png">
+	<!-- <link rel="SHORTCUT ICON" href="icon.png"> -->
 	<link rel="stylesheet" href="style.css">
+	<style>
+		.container
+		{
+			padding-top: 5em;
+		    display: flex;
+
+		    box-sizing: border-box;
+
+		    justify-content: center;
+		}
+	</style>
 </head>
 <body>
-	<script language='javascript' src='sketch.js'></script>
+	<div class="container" id="root"></div>
+	<!-- Scripts -->
+	<script src="lib/minpubsub.js"></script>
+	<!-- <script src="lib/dat.gui.js"></script> -->
+	<script src="scripts.js"></script>
+
+	<!-- <script language='javascript' src='sketch.js' defer></script> -->
 </body>
 </html>
