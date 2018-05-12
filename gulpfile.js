@@ -133,6 +133,6 @@ gulp.task('default', gulp.series( 'clean', 'build', serve, 'watch' ) );
  * Push build to gh-pages
  */
 gulp.task('deploy', function () {
-	return gulp.src( BUILD_DIR )
+	return gulp.src( './public/ **/*' )
 		.pipe(deploy())
 });
