@@ -1,2 +1,7 @@
 #dev dependencies
 /node_modules
+/public
+/maps
+/.vscode
+/old
+package-lock.json
