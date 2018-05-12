@@ -3,4 +3,6 @@
 /maps
 /.vscode
 /old
+/.publish
+/public
 package-lock.json
