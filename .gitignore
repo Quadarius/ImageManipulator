@@ -1,6 +1,0 @@
-#dev dependencies
-/node_modules
-/maps
-/.vscode
-/old
-package-lock.json
