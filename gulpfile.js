@@ -88,20 +88,6 @@ function move_styles() {
 		.pipe( gulp.dest( BUILD_DIR ) )
 }
 
-// function watch() {
-// 	var args = merge( watchify.args, { debug: true } );
-// 	var bundler = watchify( browserify( paths.entry ).transform( babelify, { presets: ['env'] } ) );
-// 	compile_js(bundler);
-
-// 	bundler.on( 'update', function() {
-// 		compile_js(bundler);
-// 		server.reload();
-// 	});
-// 	gulp.watch( paths.html, reload );
-// 	gulp.watch( paths.images.src, reload );
-// 	// gulp.watch( paths.styles.src, reload );
-// }
-
 function watch() {
 	gulp.watch( paths.scripts.src, gulp.series( compile_js, reload ) );
 	gulp.watch( paths.html,        gulp.series( move_html, reload ) );
@@ -134,5 +120,5 @@ gulp.task('default', gulp.series( 'clean', 'build', serve, 'watch' ) );
  */
 gulp.task('deploy', function () {
 	return gulp.src( './public/**/*' )
-		.pipe(deploy())
+		.pipe( deploy( { force: true } ) )
 });
