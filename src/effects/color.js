@@ -1,4 +1,4 @@
-export default function (args, originalImageData, context) {
+export default function Color(args, originalImageData, context) {
     const originalPixels = originalImageData.data;
 
     var newImageData = context.createImageData(originalImageData);

@@ -1,21 +1,15 @@
-const ImageCanvas = require('./imageCanvas').default;
-const Manipulator = require('./manipulators').default;
-const dat         = require('dat.gui');
-const Settings    = require('./settings').default;
+const ImageCanvas   = require('./imageCanvas').default;
+const ListOfEffects = require('./effects/index').default;
+const dat           = require('dat.gui');
+const Settings      = require('./settings').default;
 
 var canvasroot;
 var canvas = document.createElement("canvas");
 var sourceImage = './heic0307g.jpg';
 
 var display = new ImageCanvas( canvas, sourceImage );
+var color = ListOfEffects['color'];
 var config = {
-    transformation: 'rain',
-    options: [
-        'original',
-        'color',
-        'rain'
-    ],
-    cb: transformImage,
     width: display.width,
     height: display.height,
     red: 0,
@@ -29,20 +23,19 @@ var config = {
     rainspeed: 1
 };
 
-function setDrops(num){
-    var drops = []
-    for(let i = 0; i <= num; i++) {
-        var d = {
-            x: Math.floor(Math.random() * display.width),
-            y: Math.floor(Math.random() * display.height)
+function generateParticles( number_of_particles, w, h ){
+    let particles = [];
+    for(let i = 0; i <= number_of_particles; i++) {
+        var p = {
+            x: Math.floor( Math.random() * w ),
+            y: Math.floor( Math.random() * h )
         }
-        drops.push(d);
+        particles.push(p);
     }
-    config.raindrops = drops;
+    return particles;
 }
 
 function updateDrops( drops, number, w, h ) {
-    // console.log('updating');
     for (let i = 0; i <= number; i++) {
         drops[i].y += 10;
         if (drops[i].y > h) {
@@ -50,32 +43,25 @@ function updateDrops( drops, number, w, h ) {
             drops[i].y = 0;
         }
     }
-    // return drops;
+    return drops;
 }
+
 function transformImage(args) {
-    // if( args['rain'] ) {
-    if( '' === args.raindrops){
-        setDrops(args.rainnumber);
-    } else {
-        // console.log(args.raindrops)
-        if (args['rain']) {
-            updateDrops(args.raindrops, args.rainnumber, display.width, display.height);
-        }
-    }
-    // }
-    
-    var color = new Manipulator('color');
-    var rain  = new Manipulator('rain');
     var newImageData = color(args, display.original, display.context);
-    var rainImageData = rain(args, newImageData, display.original, display.context);
-    display.setData(rainImageData);
+    display.setData( newImageData );
 };
 
-function update() {
+var fps = 60;
+var min_elapsed_time = (1000/60) * (60/fps) -(1000/60) * 0.5;
+var previous_time = 0;
+function update(time) {
+    if( time - previous_time < min_elapsed_time ) {
+        requestAnimationFrame(update);
+        return;
+    }
+    previous_time = time;
     requestAnimationFrame(update);
-    var type = config['transformation'];
-    // console.log(type);
-    config.cb(config);
+    transformImage(config);
 }
 
 window.onload = function () {
